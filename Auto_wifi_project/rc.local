@@ -1,0 +1,27 @@
+#!/bin/sh -e
+#
+# rc.local
+#
+# This script is executed at the end of each multiuser runlevel.
+# Make sure that the script will "exit 0" on success or any other
+# value on error.
+#
+# In order to enable or disable this script just change the execution
+# bits.
+#
+# By default this script does nothing.
+
+# Print the IP address
+_IP=$(hostname -I) || true
+if [ "$_IP" ]; then
+  printf "My IP address is %s\n" "$_IP"
+fi
+#sleep 20
+#sudo /usr/local/vpnclient/vpnclient start
+#sleep 5
+#sudo dhclient -v vpn_vpn
+#sleep 6
+#sudo iptables -t nat -A POSTROUTING -o vpn_vpn -s 192.168.2.0/24 -j MASQUERADE
+sudo iptables -t nat -A POSTROUTING -o wlxd03745f41b5a -s 192.168.2.0/24 -j MASQUERADE
+#sudo ip route del default  via $( netstat -n -r | grep 'UG .*wlxd03745f41b5a' | awk '{print $2}')
+exit 0
